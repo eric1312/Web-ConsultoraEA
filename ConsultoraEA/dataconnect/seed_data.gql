@@ -1,0 +1,77 @@
+mutation CreateSeedData @transaction {
+  profile_insertMany(data: [
+    {
+      id: "f3c3a4a0-1111-41d4-a716-446655440001",
+      fullName: "Alice Developer",
+      bio: "Full stack developer",
+      email: "alice@example.com"
+    },
+    {
+      id: "f3c3a4a0-1111-41d4-a716-446655440002",
+      fullName: "Bob Designer",
+      bio: "UI/UX enthusiast",
+      email: "bob@example.com"
+    }
+  ])
+  
+  category_insertMany(data: [
+    { id: "e1b2c3d4-0000-41d4-a716-446655440001", name: "Web Development" },
+    { id: "e1b2c3d4-0000-41d4-a716-446655440002", name: "Mobile App" }
+  ])
+  
+  service_insertMany(data: [
+    {
+      name: "Web App Development",
+      description: "Custom web applications",
+      priceRange: "$1000 - $5000",
+      profileId: "f3c3a4a0-1111-41d4-a716-446655440001"
+    },
+    {
+      name: "UI Design",
+      description: "Figma design services",
+      priceRange: "$500 - $2000",
+      profileId: "f3c3a4a0-1111-41d4-a716-446655440002"
+    }
+  ])
+  
+  project_insertMany(data: [
+    {
+      id: "d9e8f7a6-2222-41d4-a716-446655440001",
+      title: "Portfolio Site",
+      description: "My personal website",
+      imageUrl: "https://example.com/project1.jpg",
+      status: "COMPLETED",
+      profileId: "f3c3a4a0-1111-41d4-a716-446655440001"
+    },
+    {
+      id: "d9e8f7a6-2222-41d4-a716-446655440002",
+      title: "Mobile App Redesign",
+      description: "Mobile app UI project",
+      imageUrl: "https://example.com/project2.jpg",
+      status: "IN_PROGRESS",
+      profileId: "f3c3a4a0-1111-41d4-a716-446655440002"
+    }
+  ])
+  
+  projectCategory_insertMany(data: [
+    { projectId: "d9e8f7a6-2222-41d4-a716-446655440001", categoryId: "e1b2c3d4-0000-41d4-a716-446655440001" },
+    { projectId: "d9e8f7a6-2222-41d4-a716-446655440002", categoryId: "e1b2c3d4-0000-41d4-a716-446655440002" }
+  ])
+  
+  lead_insertMany(data: [
+    {
+      senderName: "Client One",
+      senderEmail: "client@test.com",
+      message: "Looking for a new website",
+      status: "NEW",
+      profileId: "f3c3a4a0-1111-41d4-a716-446655440001"
+    },
+    {
+      senderName: "Client Two",
+      senderEmail: "hello@test.com",
+      message: "Need a logo design",
+      status: "PENDING",
+      profileId: "f3c3a4a0-1111-41d4-a716-446655440002"
+    }
+  ])
+}

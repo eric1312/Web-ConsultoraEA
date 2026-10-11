@@ -1,0 +1,56 @@
+mutation CreateAllData @transaction {
+  profile_insert(data: {
+    id_expr: "auth.uid",
+    fullName: "John Doe",
+    bio: "Fullstack developer",
+    email: "john@example.com"
+  })
+  project_insert(data: {
+    title: "Project Alpha",
+    description: "My first project",
+    imageUrl: "https://example.com/img.jpg",
+    status: "Active",
+    profile: {id_expr: "auth.uid"}
+  })
+  service_insert(data: {
+    name: "Consulting",
+    description: "Expert advice",
+    priceRange: "$100-$200",
+    profile: {id_expr: "auth.uid"}
+  })
+  category_insert(data: {name: "Web Development"})
+  lead_insert(data: {
+    senderName: "Client A",
+    senderEmail: "client@test.com",
+    message: "Interested in your services",
+    status: "New",
+    profile: {id_expr: "auth.uid"}
+  })
+}
+
+mutation UpdateAllData($projectId: UUID!, $leadId: UUID!, $serviceId: UUID!) @transaction {
+  project_update(key: {id: $projectId}, data: {status: "Completed"})
+  lead_update(key: {id: $leadId}, data: {status: "Contacted"})
+  service_update(key: {id: $serviceId}, data: {priceRange: "$200-$300"})
+}
+
+mutation DeleteAllData($projectId: UUID!, $leadId: UUID!, $serviceId: UUID!) @transaction {
+  project_delete(key: {id: $projectId})
+  lead_delete(key: {id: $leadId})
+  service_delete(key: {id: $serviceId})
+}
+
+query GetUserData @auth(level: USER) {
+  profile(key: {id_expr: "auth.uid"}) {
+    fullName
+    email
+    projects_on_profile { title status }
+    services_on_profile { name priceRange }
+  }
+}
+
+query ListPublicData @auth(level: PUBLIC, insecureReason: "Publicly visible portfolio") {
+  projects { title description imageUrl }
+  categories { name }
+  services { name description priceRange }
+}

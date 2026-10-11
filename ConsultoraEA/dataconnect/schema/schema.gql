@@ -1,0 +1,43 @@
+type Profile @table {
+  fullName: String!
+  bio: String!
+  email: String!
+  profileImageUrl: String
+  socialLinksJson: String
+}
+
+type Project @table {
+  title: String!
+  description: String!
+  imageUrl: String!
+  status: String!
+  projectUrl: String
+  completionDate: Date
+  profile: Profile!
+}
+
+type Service @table {
+  name: String!
+  description: String!
+  priceRange: String!
+  profile: Profile!
+}
+
+type Category @table {
+  name: String!
+}
+
+# Tabla intermedia para la relación muchos a muchos entre Project y Category
+type ProjectCategory @table(key: ["project", "category"]) {
+  project: Project!
+  category: Category!
+}
+
+type Lead @table {
+  senderName: String!
+  senderEmail: String!
+  message: String!
+  status: String!
+  relatedServiceId: UUID
+  profile: Profile!
+}
